@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.cidades.cidades.entities.Cidade;
 import com.cidades.cidades.repositories.CidadeRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 
 @Service
 public class CidadeService {
@@ -18,6 +20,12 @@ public class CidadeService {
     public List<Cidade> getAllCidades(){
 
         return repository.findAll(); // recupera os dados da cidade
+    }
+
+    public Cidade getCidadeById(long id){
+        return this.repository.findById(id).orElseThrow(
+            () -> new EntityNotFoundException("Cidade não cadastrada!")             
+        );
     }
     
 }
