@@ -17,7 +17,7 @@ public class CidadeService {
 
     public List<Cidade> getAllCidades(){
 
-        return repository.findAll();
+        return repository.findAll(); // recupera os dados da cidade
     }
     
 }
