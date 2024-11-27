@@ -27,5 +27,13 @@ public class CidadeService {
             () -> new EntityNotFoundException("Cidade não cadastrada!")             
         );
     }
+
+    public void delete(long id){
+        if (repository.existsById(id)){
+            repository.deleteById(id);
+        }
+        else{
+        throw new EntityNotFoundException("Cidade nao cadastrada!");
+        }
     
 }
