@@ -35,5 +35,22 @@ public class CidadeService {
         else{
         throw new EntityNotFoundException("Cidade nao cadastrada!");
         }
-    
-}
+    }
+
+    public Cidade save(Cidade cidade){
+        return repository.save(cidade);
+    }
+
+    public void update(Cidade  cidade, long id){
+        Cidade aux = repository.getReferenceById(id);
+
+        aux.setNome(cidade.getNome());
+        aux.setEstado(cidade.getEstado());
+        aux.setPopulacao(cidade.getPopulacao());
+        aux.setRegiao(cidade.getRegiao());
+
+        repository.save(aux);
+    }
+
+    }
+
