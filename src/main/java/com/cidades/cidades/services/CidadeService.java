@@ -1,11 +1,14 @@
 package com.cidades.cidades.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cidades.cidades.dtos.CidadeResponse;
 import com.cidades.cidades.entities.Cidade;
+import com.cidades.cidades.mappers.CidadeMapper;
 import com.cidades.cidades.repositories.CidadeRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -17,15 +20,18 @@ public class CidadeService {
     @Autowired
     private CidadeRepository repository;
 
-    public List<Cidade> getAllCidades(){
-
-        return repository.findAll(); // recupera os dados da cidade
+    public List<CidadeResponse> getAllCidades(){
+        return repository.findAll()
+                         .stream()
+                         .map(c -> CidadeMapper.toDTO(c))
+                         .collect(Collectors.toList()); // recupera os dados da cidade
     }
 
-    public Cidade getCidadeById(long id){
-        return this.repository.findById(id).orElseThrow(
+    public CidadeResponse getCidadeById(long id){
+        Cidade cidade = repository.findById(id).orElseThrow(
             () -> new EntityNotFoundException("Cidade não cadastrada!")             
         );
+        return CidadeMapper.toDTO(cidade);
     }
 
     public void delete(long id){
@@ -37,8 +43,9 @@ public class CidadeService {
         }
     }
 
-    public Cidade save(Cidade cidade){
-        return repository.save(cidade);
+    public CidadeResponse save(Cidade cidade){
+        Cidade newCidade = repository.save(cidade);
+        return CidadeMapper.toDTO(newCidade);
     }
 
     public void update(Cidade  cidade, long id){

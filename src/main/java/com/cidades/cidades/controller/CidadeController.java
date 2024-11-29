@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cidades.cidades.dtos.CidadeResponse;
 import com.cidades.cidades.entities.Cidade;
 import com.cidades.cidades.services.CidadeService;
 
@@ -24,12 +25,12 @@ public class CidadeController {
     private CidadeService service;
 
     @GetMapping
-    public ResponseEntity <List<Cidade>> getCidades(){
+    public ResponseEntity <List<CidadeResponse>> getCidades(){
         return ResponseEntity.ok( service.getAllCidades());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Cidade> getCidade(@PathVariable long id){
+    public ResponseEntity<CidadeResponse> getCidade(@PathVariable long id){
         return ResponseEntity.ok(service.getCidadeById(id));
     }
 
@@ -48,8 +49,8 @@ public class CidadeController {
     }
 
     @PostMapping
-    public ResponseEntity<Cidade> saveCidade(@RequestBody Cidade cidade){
-        Cidade newCidade =service.save(cidade);
+    public ResponseEntity<CidadeResponse> saveCidade(@RequestBody Cidade cidade){
+        CidadeResponse newCidade = service.save(cidade);
         return ResponseEntity.created(null).body(newCidade);
     }
     
