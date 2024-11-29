@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,14 +43,14 @@ public class CidadeController {
 
     @PutMapping("{id}")
     public ResponseEntity<Void> updateCidade(@PathVariable long id, 
-                                             @RequestBody CidadeRequest cidade){
+                                             @Validated @RequestBody CidadeRequest cidade){
 
         service.update(cidade, id);
         return ResponseEntity.ok().build();  
     }
 
     @PostMapping
-    public ResponseEntity<CidadeResponse> saveCidade(@RequestBody CidadeRequest cidade){
+    public ResponseEntity<CidadeResponse> saveCidade(@Validated @RequestBody CidadeRequest cidade){
         CidadeResponse newCidade = service.save(cidade);
         return ResponseEntity.created(null).body(newCidade);
     }
