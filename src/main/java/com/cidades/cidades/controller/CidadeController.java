@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cidades.cidades.dtos.CidadeRequest;
 import com.cidades.cidades.dtos.CidadeResponse;
-import com.cidades.cidades.entities.Cidade;
 import com.cidades.cidades.services.CidadeService;
 
 @RestController
@@ -42,14 +42,14 @@ public class CidadeController {
 
     @PutMapping("{id}")
     public ResponseEntity<Void> updateCidade(@PathVariable long id, 
-                                             @RequestBody Cidade cidade){
+                                             @RequestBody CidadeRequest cidade){
 
         service.update(cidade, id);
         return ResponseEntity.ok().build();  
     }
 
     @PostMapping
-    public ResponseEntity<CidadeResponse> saveCidade(@RequestBody Cidade cidade){
+    public ResponseEntity<CidadeResponse> saveCidade(@RequestBody CidadeRequest cidade){
         CidadeResponse newCidade = service.save(cidade);
         return ResponseEntity.created(null).body(newCidade);
     }

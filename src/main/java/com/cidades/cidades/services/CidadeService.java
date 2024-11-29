@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cidades.cidades.dtos.CidadeRequest;
 import com.cidades.cidades.dtos.CidadeResponse;
 import com.cidades.cidades.entities.Cidade;
 import com.cidades.cidades.mappers.CidadeMapper;
@@ -43,18 +44,18 @@ public class CidadeService {
         }
     }
 
-    public CidadeResponse save(Cidade cidade){
-        Cidade newCidade = repository.save(cidade);
+    public CidadeResponse save(CidadeRequest cidade){
+        Cidade newCidade = repository.save(CidadeMapper.toEntity(cidade));
         return CidadeMapper.toDTO(newCidade);
     }
 
-    public void update(Cidade  cidade, long id){
+    public void update(CidadeRequest  cidade, long id){
         Cidade aux = repository.getReferenceById(id);
 
-        aux.setNome(cidade.getNome());
-        aux.setEstado(cidade.getEstado());
-        aux.setPopulacao(cidade.getPopulacao());
-        aux.setRegiao(cidade.getRegiao());
+        aux.setNome(cidade.nome());
+        aux.setEstado(cidade.estado());
+        aux.setPopulacao(cidade.populacao());
+        aux.setRegiao(cidade.regiao());
 
         repository.save(aux);
     }
